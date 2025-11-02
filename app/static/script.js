@@ -45,10 +45,10 @@ async function loadContracts() {
 
 // SVG icons (edit, delete)
 function editIcon(onclick) {
-    return `<svg fill="#3498db" viewBox="0 0 24 24" onclick="${onclick}"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>`;
+    return `<i class="material-icons" style="cursor:pointer; color:#3498db; font-size:20px; margin-right:5px;" onclick="${onclick}">edit</i>`;
 }
 function deleteIcon(onclick) {
-    return `<svg fill="#e74c3c" viewBox="0 0 24 24" onclick="${onclick}"><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-4.5l-1-1z"/></svg>`;
+    return `<i class="material-icons" style="cursor:pointer; color:#e74c3c; font-size:20px;" onclick="${onclick}">delete</i>`;
 }
 
 function showForm(show = true, title = 'Add Contract') {
@@ -118,3 +118,21 @@ document.getElementById('addContractBtn').addEventListener('click', () => {
 document.getElementById('cancelBtn').addEventListener('click', () => showForm(false));
 
 loadContracts();
+
+
+const helpBtn = document.getElementById('helpBtn');
+const helpModal = document.getElementById('helpModal');
+const closeHelpBtn = document.getElementById('closeHelpBtn');
+
+helpBtn.addEventListener('click', () => {
+    helpModal.classList.remove('hidden'); // Show modal
+});
+
+closeHelpBtn.addEventListener('click', () => {
+    helpModal.classList.add('hidden'); // Hide modal
+});
+
+// Optional: click outside modal to close
+helpModal.addEventListener('click', (e) => {
+    if (e.target === helpModal) helpModal.classList.add('hidden');
+});

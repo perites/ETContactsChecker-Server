@@ -4,18 +4,23 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="icon" type="image/x-icon" href="/static/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
 <body>
 <main>
     <div class="container">
         <div class="header">
-            <h1>Your Tracked Contracts</h1>
+            <h1 class="d-flex align-items-center">
+                Your Tracked Contracts
+                <!-- Help Icon next to header text -->
+                <i id="helpBtn" class="material-icons help-icon" title="How to use?">info_outline</i>
+            </h1>
+            <!-- Add Contract Button -->
             <button id="addContractBtn" class="icon-button" title="Add Contract">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4CAF50" viewBox="0 0 24 24">
-                    <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z"/>
-                </svg>
+                <i class="material-icons" style="font-size:24px; color:#4CAF50;">add</i>
             </button>
+
         </div>
 
         <div id="contractsList" class="contracts-list"></div>
@@ -34,6 +39,108 @@
 
     </p>
 </footer>
+
+
+<!-- Help / Info Modal -->
+<div id="helpModal" class="overlay hidden">
+    <div class="popup-form">
+        <h2>About</h2>
+        <p>
+            This site lets you monitor your contract’s contact count and sends Slack notifications when the limit is
+            reached. Data and alerts <i>should</i> be updated every hour.
+        </p>
+
+        <h2>How to use</h2>
+
+        <h3>Step 1 — Create a Data Extension</h3>
+        <ol>
+            <li>In your root capsule, create a new Data Extension.</li>
+            <li>Add a single field:</li>
+            <ul>
+                <li><strong>Name:</strong> SubscriberCount</li>
+                <li><strong>Data Type:</strong> Number</li>
+            </ul>
+        </ol>
+
+        <h3>Step 2 — Create the Automation in Automation Studio</h3>
+        <ol>
+            <li>Go to <strong>Automation Studio → New Automation → SQL Query</strong>.</li>
+            <li>
+                Create a new SQL Query with the following query:
+                <pre style="background:#3a3a3a; padding:10px; border-radius:8px; overflow-x:auto; margin-top:6px;">
+SELECT COUNT(*) AS SubscriberCount
+FROM _Subscribers</pre>
+
+            </li>
+            <li>
+                Set the automation to <strong>run every hour</strong> and target the Data Extension created in Step 1.
+            </li>
+        </ol>
+
+        <h3>Step 3 — Add information to this site</h3>
+        <ol>
+            <li>Press the <strong>+</strong> button in the top-left corner.</li>
+            <li>Fill in all the required fields:</li>
+        </ol>
+
+        <div class="info-note">
+            <strong>Note:</strong> To find “Prod fields”: go to
+            <a href="https://prodepc.com/pages/brand/oauth-connection" target="_blank" rel="noopener noreferrer"
+               class="green-link"><strong>Prod OAuth connections</strong></a>, search for your contract, and press
+            <strong>Update</strong>.
+
+
+        </div>
+
+        <table class="info-table">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Contract Name</strong></td>
+                <td>Any name that identifies your contract</td>
+            </tr>
+            <tr>
+                <td><strong>Slack Users IDs</strong></td>
+                <td>
+
+                    Slack users IDs of people who should receive notifications about this contract (comma-separated;
+                    copy each User ID
+                    from their Slack profile)
+
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>SFMC Subdomain</strong></td>
+                <td>API Endpoint from Prod</td>
+            </tr>
+            <tr>
+                <td><strong>Client ID</strong></td>
+                <td>Client ID from Prod</td>
+            </tr>
+            <tr>
+                <td><strong>Client Secret</strong></td>
+                <td>Client Secret from Prod</td>
+            </tr>
+            <tr>
+                <td><strong>DE Key</strong></td>
+                <td>External Key of the Data Extension created in Step 1</td>
+            </tr>
+            <tr>
+                <td><strong>Contacts Limit</strong></td>
+                <td>Contact threshold that triggers a Slack warning</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" id="closeHelpBtn" class="cancel" style="margin-top:18px;">Close</button>
+    </div>
+</div>
 
 
 <!-- Add/Edit Form (popup) -->

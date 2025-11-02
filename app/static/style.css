@@ -185,3 +185,132 @@ main {
 .site-footer a:hover {
     text-decoration: underline;
 }
+
+
+.help-icon {
+    font-size: 24px;
+    color: #4CAF50;
+    cursor: pointer;
+    margin-left: 8px; /* spacing from text */
+    vertical-align: middle;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.help-icon:hover {
+    transform: scale(1.2);
+    color: #45a049;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Help Modal Styling */
+#helpModal .popup-form {
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 700px;
+  max-width: 90%;
+  padding: 22px 28px;
+  border-radius: 12px;
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  line-height: 1.55;
+}
+
+/* Headings */
+#helpModal h2 {
+  margin-top: 0;
+  color: #f0f0f0;
+  border-bottom: 1px solid #3a3a3a;
+  padding-bottom: 5px;
+  margin-bottom: 8px;
+}
+#helpModal h3 {
+  color: #f0f0f0;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+/* Lists */
+#helpModal ol,
+#helpModal ul {
+  margin-left: 20px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+#helpModal li {
+  margin-bottom: 6px;
+}
+
+/* Info Note box */
+.info-note {
+  background: #242424;
+  border: 1px solid #333;
+  padding: 9px 11px;
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 0.95em;
+}
+
+/* Slight green accent link */
+.green-link {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.green-link:hover {
+  text-decoration: underline;
+}
+
+/* Table */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 0.95em;
+}
+
+
+
+
+.info-table th,
+.info-table td {
+  text-align: left;
+  border-bottom: 1px solid #555;
+  padding: 8px 10px; /* increased spacing between cells */
+}
+
+.info-table tr {
+  line-height: 1.6; /* adds slight vertical spacing between rows */
+}
+
+.info-table th {
+  color: #f0f0f0;
+}
+
+
+/* Thin Scrollbar */
+#helpModal .popup-form::-webkit-scrollbar {
+  width: 6px;
+}
+#helpModal .popup-form::-webkit-scrollbar-track {
+  background: transparent;
+}
+#helpModal .popup-form::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+#helpModal .popup-form {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
