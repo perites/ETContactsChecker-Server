@@ -11,8 +11,6 @@ from database import ContractData
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_key_only_for_local")
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
 GOOGLE_CLIENT_ID = "727910134511-iciag20av4v4u3hdqajarn2g2s59g1ng.apps.googleusercontent.com"
 client_secrets_file = "client_secret.json"
 
@@ -20,7 +18,7 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="http://localhost:5000/auth/callback"
+    redirect_uri=os.getenv("REDIRECT_URI")
 )
 
 
