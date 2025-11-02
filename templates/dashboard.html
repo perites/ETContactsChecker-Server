@@ -3,20 +3,38 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.png">
+
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Your Tracked Contracts</h1>
-        <button id="addContractBtn" class="icon-button" title="Add Contract">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4CAF50" viewBox="0 0 24 24">
-                <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z"/>
-            </svg>
-        </button>
-    </div>
+<main>
+    <div class="container">
+        <div class="header">
+            <h1>Your Tracked Contracts</h1>
+            <button id="addContractBtn" class="icon-button" title="Add Contract">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4CAF50" viewBox="0 0 24 24">
+                    <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z"/>
+                </svg>
+            </button>
+        </div>
 
-    <div id="contractsList" class="contracts-list"></div>
-</div>
+        <div id="contractsList" class="contracts-list"></div>
+
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <p>
+        Source: <a href="https://github.com/perites/ETContactsChecker-Server" target="_blank">GitHub</a> |
+        Have a question or improvement in mind? Write to me in
+        <a href="https://t.me/perites" target="_blank">telegram</a>
+        or
+        <a href="mailto:nikita.krementar@gmail.com">email</a>
+
+    </p>
+</footer>
+
 
 <!-- Add/Edit Form (popup) -->
 <div id="formOverlay" class="overlay hidden">
