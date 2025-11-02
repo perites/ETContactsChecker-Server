@@ -1,19 +1,23 @@
-import os
 import logging
-import threading
-import time
+import os
 
-import schedule
-
-import contacts_checker
-from app import app
 from dotenv import load_dotenv
+from flask import Flask
 
 
-def scheduler_loop():
-    while True:
-        schedule.run_pending()
-        time.sleep(5)
+def create_app():
+    app = Flask(__name__)
+    app.secret_key = os.getenv("FLASK_SECRET_KEY")
+
+    from .auth import auth_bp
+    from .dashboard import dashboard_bp
+    from .api import api_bp
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(dashboard_bp)
+    app.register_blueprint(api_bp)
+
+    return app
 
 
 def configure_logging():
@@ -28,7 +32,7 @@ def configure_logging():
     console_formatter = logging.Formatter(console_format, datefmt=datefmt)
     console_handler.setFormatter(console_formatter)
 
-    file_handler = logging.FileHandler('main-log.log', mode='a', encoding='utf-8')
+    file_handler = logging.FileHandler('flask-main-log.log', mode='a', encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
 
     file_formatter = logging.Formatter(file_format, datefmt=datefmt)
@@ -43,10 +47,4 @@ def configure_logging():
 
 configure_logging()
 load_dotenv()
-
-logging.info("Starting Flask app and scheduler...")
-
-schedule.every(30).seconds.do(contacts_checker.check_all)
-threading.Thread(target=scheduler_loop, daemon=True).start()
-if __name__ == "__main__":
-    app.run(debug=True)
+app = create_app()

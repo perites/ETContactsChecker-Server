@@ -1,66 +1,14 @@
 import json
-import os
 
-import google.auth.transport.requests
-from flask import Flask, redirect, session, request, jsonify, render_template, url_for
-from google.oauth2 import id_token
-from google_auth_oauthlib.flow import Flow
+from flask import Blueprint
+from flask import session, request, jsonify
 
 from database import ContractData
 
-app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_key_only_for_local")
-
-GOOGLE_CLIENT_ID = "727910134511-iciag20av4v4u3hdqajarn2g2s59g1ng.apps.googleusercontent.com"
-client_secrets_file = "client_secret.json"
-
-flow = Flow.from_client_secrets_file(
-    client_secrets_file=client_secrets_file,
-    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
-            "openid"],
-    redirect_uri=os.getenv("REDIRECT_URI")
-)
+api_bp = Blueprint('api', __name__)
 
 
-@app.route("/login")
-def login():
-    authorization_url, state = flow.authorization_url()
-    session["state"] = state
-    return redirect(authorization_url)
-
-
-@app.route("/auth/callback")
-def callback():
-    flow.fetch_token(authorization_response=request.url)
-    credentials = flow.credentials
-    request_session = google.auth.transport.requests.Request()
-    id_info = id_token.verify_oauth2_token(
-        id_token=credentials.id_token,
-        request=request_session,
-        audience=GOOGLE_CLIENT_ID
-    )
-
-    session["google_id"] = id_info.get("sub")
-    session["name"] = id_info.get("name")
-    session["email"] = id_info.get("email")
-
-    return redirect(url_for('dashboard'))
-
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(url_for('dashboard'))
-
-
-@app.route("/dashboard")
-def dashboard():
-    if not session.get("google_id"):
-        return redirect(url_for('login'))
-    return render_template("dashboard.html")
-
-
-@app.route("/api/contracts", methods=["GET"])
+@api_bp.route("/api/contracts", methods=["GET"])
 def get_contracts():
     google_id = session.get("google_id")
     if not google_id:
@@ -92,7 +40,7 @@ def get_contracts():
     return jsonify(result)
 
 
-@app.route("/api/contracts", methods=["POST"])
+@api_bp.route("/api/contracts", methods=["POST"])
 def add_contract():
     google_id = session.get("google_id")
     data = request.form
@@ -114,7 +62,7 @@ def add_contract():
     return jsonify({"success": True, "id": contract.id}), 201
 
 
-@app.route("/api/contracts/<int:contract_id>", methods=["PATCH"])
+@api_bp.route("/api/contracts/<int:contract_id>", methods=["PATCH"])
 def edit_contract(contract_id):
     google_id = session.get("google_id")
     contract = ContractData.get_or_none(
@@ -144,7 +92,7 @@ def edit_contract(contract_id):
     return jsonify({"success": True})
 
 
-@app.route("/api/contracts/<int:contract_id>", methods=["DELETE"])
+@api_bp.route("/api/contracts/<int:contract_id>", methods=["DELETE"])
 def delete_contract(contract_id):
     google_id = session.get("google_id")
     contract = ContractData.get_or_none(ContractData.id == contract_id, ContractData.author_google_id == google_id)

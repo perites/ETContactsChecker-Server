@@ -2,3 +2,5 @@
 /client_secret.json
 /main-log.log
 /.env
+/app_data.sqlite3
+/app/flask-main-log.log
