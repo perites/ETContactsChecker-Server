@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Your Tracked Contracts</h1>
+        <button id="addContractBtn" class="icon-button" title="Add Contract">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4CAF50" viewBox="0 0 24 24">
+                <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z"/>
+            </svg>
+        </button>
+    </div>
+
+    <div id="contractsList" class="contracts-list"></div>
+</div>
+
+<!-- Add/Edit Form (popup) -->
+<div id="formOverlay" class="overlay hidden">
+    <form id="contractForm" class="popup-form">
+        <h2 id="formTitle">Add Contract</h2>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="slack_users_ids" placeholder="Slack User IDs (comma-separated)" required>
+        <input type="text" name="sfmc_subdomain" placeholder="SFMC Subdomain" required>
+        <input type="text" name="client_id" placeholder="Client ID" required>
+        <input type="password" name="client_secret" placeholder="Client Secret" required>
+        <input type="text" name="de_key" placeholder="DE Key" required>
+        <input type="number" name="contacts_limit" placeholder="Contacts Limit" required>
+        <button type="submit">Save</button>
+        <button type="button" id="cancelBtn" class="cancel">Cancel</button>
+    </form>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

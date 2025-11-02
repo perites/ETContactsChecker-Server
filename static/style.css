@@ -1,0 +1,161 @@
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Centered container */
+.container {
+    max-width: 800px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.icon-button:hover {
+    transform: scale(1.1);
+}
+
+/* Contract list */
+.contracts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.contract-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.contract-item.limit-reached {
+    border-color: #e74c3c;
+}
+
+.contract-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contract-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.contract-updated-bottom {
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.6;
+    margin-top: 10px;
+}
+
+
+.contract-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contract-icons svg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.contract-icons svg:hover {
+    opacity: 0.7;
+}
+
+.contract-info {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #c0c0c0;
+}
+
+/* Progress bar */
+.usage-bar {
+    height: 8px;
+    background-color: #444;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.usage-bar-inner {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+/* Popup form */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup-form {
+    background-color: #2a2a2a;
+    padding: 25px;
+    border-radius: 12px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-form input {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3a3a3a;
+    color: #f0f0f0;
+}
+
+.popup-form button {
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.popup-form button.cancel {
+    background-color: #e74c3c;
+}
