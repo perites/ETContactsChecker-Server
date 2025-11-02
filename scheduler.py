@@ -42,5 +42,5 @@ if __name__ == "__main__":
     load_dotenv()
     configure_logging()
     logging.info("Starting scheduler...")
-    schedule.every(30).seconds.do(check_all)
+    schedule.every().hour.do(check_all)
     scheduler_loop()
