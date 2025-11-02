@@ -1,4 +1,5 @@
 import json
+import logging
 
 from peewee import (
     SqliteDatabase,
@@ -49,3 +50,8 @@ def create_tables():
 def drop_tables():
     with database:
         database.drop_tables([ContractData])
+
+
+if __name__ == "__main__":
+    create_tables()
+    logging.info("Tables created")
