@@ -1,3 +1,4 @@
+import os
 import logging
 import threading
 import time
@@ -41,7 +42,10 @@ def configure_logging():
 
 
 configure_logging()
+load_dotenv()
+
 logging.info("Starting Flask app and scheduler...")
+
 schedule.every(30).seconds.do(contacts_checker.check_all)
 threading.Thread(target=scheduler_loop, daemon=True).start()
 if __name__ == "__main__":
