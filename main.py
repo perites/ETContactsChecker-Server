@@ -40,11 +40,9 @@ def configure_logging():
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
 
+configure_logging()
+logging.info("Starting Flask app and scheduler...")
+schedule.every(30).seconds.do(contacts_checker.check_all)
+threading.Thread(target=scheduler_loop, daemon=True).start()
 if __name__ == "__main__":
-    configure_logging()
-    logging.info("Starting Flask app and scheduler...")
-
-    schedule.every(30).seconds.do(contacts_checker.check_all)
-    threading.Thread(target=scheduler_loop, daemon=True).start()
-
     app.run(debug=True)
