@@ -42,10 +42,10 @@ def callback():
     session["name"] = id_info.get("name")
     session["email"] = id_info.get("email")
 
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('dashboard.dashboard'))
 
 
 @auth_bp.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('dashboard.dashboard'))
