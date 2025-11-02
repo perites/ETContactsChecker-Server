@@ -6,6 +6,7 @@ import schedule
 
 import contacts_checker
 from app import app
+from dotenv import load_dotenv
 
 
 def scheduler_loop():
