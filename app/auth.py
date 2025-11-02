@@ -11,7 +11,11 @@ auth_bp = Blueprint('auth', __name__)
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 flow = Flow.from_client_secrets_file(
     "client_secret.json",
-    scopes=["openid", "email", "profile"],
+    scopes=[
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "openid"
+    ],
     redirect_uri=os.getenv("REDIRECT_URI")
 )
 
