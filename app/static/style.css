@@ -175,6 +175,10 @@ main {
     border-top: 1px solid #333;
     color: #ccc;
     font-size: 0.9em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 .site-footer a {

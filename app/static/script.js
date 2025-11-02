@@ -72,12 +72,21 @@ function editContract(contract) {
 }
 
 async function deleteContract(id) {
-    if (!confirm('Are you sure you want to delete this contract?')) return;
+    const confirmed = await confirmDelete();
+    if (!confirmed) return;
+
     const res = await fetch(`/api/contracts/${id}`, { method: 'DELETE' });
     const result = await res.json();
-    if (result.success) loadContracts();
-    else alert('Error deleting contract: ' + result.error);
+
+    if (result.success) {
+        loadContracts();
+        showToast('Contract deleted successfully', 'success');
+    } else {
+        showToast('Error deleting contract: ' + result.error, 'error');
+    }
 }
+
+
 
 const form = document.getElementById('contractForm');
 form.addEventListener('submit', async (e) => {
@@ -100,13 +109,20 @@ form.addEventListener('submit', async (e) => {
 
     const result = await res.json();
     if (result.success) {
-        showForm(false);
-        form.reset();
-        editingId = null;
-        loadContracts();
-    } else {
-        alert('Error: ' + result.error);
-    }
+
+
+    const msg = editingId ? 'Contract updated successfully' : 'Contract added successfully';
+    showToast(msg, 'success');
+
+
+    showForm(false);
+    form.reset();
+    editingId = null;
+    loadContracts();
+
+} else {
+    showToast('Error: ' + result.error, 'error');
+}
 });
 
 document.getElementById('addContractBtn').addEventListener('click', () => {
@@ -136,3 +152,53 @@ closeHelpBtn.addEventListener('click', () => {
 helpModal.addEventListener('click', (e) => {
     if (e.target === helpModal) helpModal.classList.add('hidden');
 });
+
+
+// === Toast Helpers ===
+function showToast(message, type = "success") {
+    const borderColor = type === "error" ? "#e74c3c" : "#4CAF50";
+    const bgColor = "#2a2a2a"; // dark grey background
+
+    Toastify({
+        text: message,
+        duration: 3500,
+        gravity: "top", // 👈 appear from top
+        position: "right", // 👈 appear from left
+        close: false,
+        stopOnFocus: true,
+        style: {
+            background: bgColor,
+            border: `2px solid ${borderColor}`,
+            borderRadius: "8px",
+            color: "#f0f0f0",
+            fontFamily: "Tahoma, sans-serif",
+            boxShadow: "0 0 8px rgba(0,0,0,0.3)",
+            padding: "10px 14px",
+        },
+        offset: {
+            x: 20, // distance from left edge
+            y: 20, // distance from top
+        },
+    }).showToast();
+}
+
+
+// === Confirmation Helper ===
+async function confirmDelete() {
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "This action will permanently delete the contract.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#4CAF50',
+        confirmButtonText: 'Yes, delete it',
+        background: '#2a2a2a',
+        color: '#f0f0f0',
+
+
+
+
+    });
+    return result.isConfirmed;
+}
