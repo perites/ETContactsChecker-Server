@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.getenv("FLASK_SECRET_KEY")
     app.config['SESSION_COOKIE_SECURE'] = True
-    app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
+    app.config['SESSION_COOKIE_SAMESITE'] = "None"
 
     from .auth import auth_bp
     from .dashboard import dashboard_bp
