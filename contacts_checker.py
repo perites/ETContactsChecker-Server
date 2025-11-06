@@ -51,6 +51,16 @@ def send_message_to_slack(slack_user_id, message):
         data=json.dumps(payload)
     )
 
+    if not response.ok:
+        logger.warning(
+            f"Slack webhook returned {response.status_code}: {response.text}. "
+            f"Slack will retry automatically."
+        )
+    else:
+        logger.debug("Slack message delivered successfully.")
+    
+
+    
     return response.ok
 
 
